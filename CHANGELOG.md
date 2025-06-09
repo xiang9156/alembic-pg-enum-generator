@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MIT license
 
 ### Technical Details
-- Supports Python 3.8+
+- Supports Python 3.8+ (including 3.13)
 - Requires Alembic 1.0+
 - Requires SQLAlchemy 1.4+
 - PostgreSQL only (by design)
