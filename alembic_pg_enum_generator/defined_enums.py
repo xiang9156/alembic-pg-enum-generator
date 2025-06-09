@@ -60,6 +60,7 @@ def get_defined_enums(
         Dict mapping enum names to their values: {"my_enum": ("a", "b", "c")}
     """
     if include_name is None:
+
         def include_name(_):
             return True
 

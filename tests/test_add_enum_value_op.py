@@ -98,7 +98,6 @@ class TestAddEnumValueOp:
         assert op.value == "pending"
         assert result == "result"
 
-
     def test_render_function(self):
         """Test the render function directly."""
         from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
@@ -134,4 +133,3 @@ class TestAddEnumValueOp:
 
         expected = "op.add_enum_value('my-schema', 'user_status', 'pending-review')"
         assert result == expected
-

@@ -132,6 +132,7 @@ class TestIntegration:
     @patch("alembic_pg_enum_generator.compare_dispatch.get_defined_enums")
     def test_end_to_end_with_filter(self, mock_get_defined):
         """Test complete flow with include_name filter."""
+
         # Setup: Configure filter to only include enums ending with '_status'
         def status_filter(name):
             return name.endswith("_status")

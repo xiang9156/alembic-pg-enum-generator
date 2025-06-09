@@ -13,9 +13,9 @@ def get_enum_values(enum_type: sqlalchemy.Enum) -> Tuple[str, ...]:
         enum_type = enum_type.impl
 
     # If a Python Enum class was used, extract values from the enum class
-    if hasattr(enum_type, 'python_type') and enum_type.python_type:
+    if hasattr(enum_type, "python_type") and enum_type.python_type:
         python_enum_class = enum_type.python_type
-        if hasattr(python_enum_class, '__members__'):
+        if hasattr(python_enum_class, "__members__"):
             return tuple(member.value for member in python_enum_class)
 
     # Otherwise, use the enums list directly (for string-based enums)
@@ -53,6 +53,7 @@ def get_declared_enums(
         Dict mapping enum names to their values: {"my_enum": ("a", "b", "c")}
     """
     if include_name is None:
+
         def include_name(_):
             return True
 

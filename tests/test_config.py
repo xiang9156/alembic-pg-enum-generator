@@ -15,6 +15,7 @@ class TestConfig:
 
     def test_config_with_include_name(self):
         """Test Config with include_name filter."""
+
         def filter_func(name):
             return name.endswith("_status")
 
@@ -56,6 +57,7 @@ class TestConfigurationManagement:
 
     def test_set_configuration(self):
         """Test set_configuration updates the global configuration."""
+
         def custom_filter(name):
             return name.endswith("_enum")
 
@@ -69,6 +71,7 @@ class TestConfigurationManagement:
 
     def test_set_configuration_overwrites(self):
         """Test set_configuration overwrites previous configuration."""
+
         # Set first configuration
         def always_true(name):
             return True
@@ -117,6 +120,7 @@ class TestConfigurationManagement:
 
     def test_configuration_with_lambda(self):
         """Test configuration with custom function."""
+
         def enum_filter(x):
             return x in ["status", "priority"]
 
