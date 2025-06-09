@@ -1,27 +1,25 @@
-from typing import Tuple, Any, Union, List, Optional, Callable
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 import sqlalchemy
 from sqlalchemy import MetaData
-from sqlalchemy.dialects import postgresql
 
 from .types import EnumNamesToValues
 
 
 def get_enum_values(enum_type: sqlalchemy.Enum) -> Tuple[str, ...]:
     """Extract enum values from SQLAlchemy Enum type."""
-    # For specific case when types.TypeDecorator is used
+    # Handle TypeDecorator wrapped enums
     if isinstance(enum_type, sqlalchemy.types.TypeDecorator):
-        dialect = postgresql.dialect
+        enum_type = enum_type.impl
 
-        def value_processor(value):
-            return enum_type.process_bind_param(
-                enum_type.impl.result_processor(dialect, enum_type)(value), dialect
-            )
-    else:
-        def value_processor(enum_value):
-            return enum_value
+    # If a Python Enum class was used, extract values from the enum class
+    if hasattr(enum_type, 'python_type') and enum_type.python_type:
+        python_enum_class = enum_type.python_type
+        if hasattr(python_enum_class, '__members__'):
+            return tuple(member.value for member in python_enum_class)
 
-    return tuple(value_processor(value) for value in enum_type.enums)
+    # Otherwise, use the enums list directly (for string-based enums)
+    return tuple(enum_type.enums)
 
 
 def column_type_is_enum(column_type: Any) -> bool:
@@ -44,19 +42,20 @@ def get_declared_enums(
 ) -> EnumNamesToValues:
     """
     Return a dict mapping SQLAlchemy declared enumeration types to their values.
-    
+
     Args:
         metadata: SQLAlchemy schema metadata
         schema: Schema name (e.g. "public")
         default_schema: Default schema name
         include_name: Optional filter function for enum names
-        
+
     Returns:
         Dict mapping enum names to their values: {"my_enum": ("a", "b", "c")}
     """
     if include_name is None:
-        include_name = lambda _: True
-        
+        def include_name(_):
+            return True
+
     enum_name_to_values = {}
 
     if isinstance(metadata, list):

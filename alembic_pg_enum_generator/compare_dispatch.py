@@ -1,16 +1,16 @@
 from typing import Iterable, Union
 
-import alembic.autogenerate.comparators
+from alembic.autogenerate import comparators
 from alembic.autogenerate.api import AutogenContext
 from alembic.operations.ops import UpgradeOps
 
+from .add_enum_value_op import AddEnumValueOp
 from .config import get_configuration
 from .declared_enums import get_declared_enums
 from .defined_enums import get_defined_enums
-from .add_enum_value_op import AddEnumValueOp
 
 
-@alembic.autogenerate.comparators.dispatch_for("schema")
+@comparators.dispatch_for("schema")
 def compare_enums_for_additions(
     autogen_context: AutogenContext,
     upgrade_ops: UpgradeOps,
@@ -21,7 +21,7 @@ def compare_enums_for_additions(
     This is the main integration point with Alembic's autogenerate system.
     """
     config = get_configuration()
-    
+
     # Check if we're using PostgreSQL
     if not autogen_context.connection.dialect.name == "postgresql":
         return
@@ -55,9 +55,11 @@ def compare_enums_for_additions(
                 continue
 
             defined_values = defined_enums[enum_name]
-            
+
             # Find new values (values in declared but not in defined)
-            new_values = [value for value in declared_values if value not in defined_values]
+            new_values = [
+                value for value in declared_values if value not in defined_values
+            ]
 
             # Generate AddEnumValueOp for each new value
             for value in new_values:

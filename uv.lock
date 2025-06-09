@@ -80,6 +80,13 @@ test = [
     { name = "pytest-cov", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "alembic", version = "1.14.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "alembic", version = "1.16.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "sqlalchemy" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "alembic", specifier = ">=1.0.0" },
@@ -99,6 +106,12 @@ requires-dist = [
     { name = "twine", marker = "extra == 'dev'" },
 ]
 provides-extras = ["dev", "test"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "alembic", specifier = ">=1.14.1" },
+    { name = "sqlalchemy", specifier = ">=2.0.41" },
+]
 
 [[package]]
 name = "backports-tarfile"

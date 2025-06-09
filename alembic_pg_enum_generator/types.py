@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum as PyEnum
-from typing import Tuple, Dict, FrozenSet, Optional
+from typing import Dict, Optional, Tuple
 
-from sqlalchemy import Enum, ARRAY
+from sqlalchemy import ARRAY, Enum
 
 
 class ColumnType(PyEnum):

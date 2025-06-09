@@ -1,11 +1,11 @@
 """Tests for defined_enums module."""
-import pytest
-from unittest.mock import Mock, MagicMock
+
+from unittest.mock import Mock
 
 from alembic_pg_enum_generator.defined_enums import (
-    get_defined_enums,
-    get_all_enums,
     _extract_enum_name,
+    get_all_enums,
+    get_defined_enums,
 )
 
 
@@ -53,11 +53,11 @@ class TestGetAllEnums:
         # Verify the SQL query was executed
         mock_connection.execute.assert_called_once()
         call_args = mock_connection.execute.call_args
-        
+
         # Check that it's a text query with schema parameter
-        assert "pg_catalog.pg_type" in str(call_args[0][0])
-        assert "pg_catalog.pg_enum" in str(call_args[0][0])
-        assert call_args[1] == {"schema": "public"}
+        assert "pg_catalog.pg_type" in str(call_args.args[0])
+        assert "pg_catalog.pg_enum" in str(call_args.args[0])
+        assert call_args.args[1] == {"schema": "public"}
         assert result == mock_result
 
 
@@ -68,7 +68,7 @@ class TestGetDefinedEnums:
         mock_connection.execute.return_value = []
 
         result = get_defined_enums(mock_connection, "public")
-        
+
         assert result == {}
 
     def test_get_defined_enums_single_enum(self):
@@ -79,24 +79,22 @@ class TestGetDefinedEnums:
         ]
 
         result = get_defined_enums(mock_connection, "public")
-        
-        assert result == {
-            "user_status": ("active", "inactive", "pending")
-        }
+
+        assert result == {"user_status": ("active", "inactive", "pending")}
 
     def test_get_defined_enums_multiple_enums(self):
         """Test get_defined_enums with multiple enums."""
         mock_connection = Mock()
         mock_connection.execute.return_value = [
             ("user_status", ["active", "inactive"]),
-            ("order_status", ["draft", "submitted", "shipped"])
+            ("order_status", ["draft", "submitted", "shipped"]),
         ]
 
         result = get_defined_enums(mock_connection, "public")
-        
+
         assert result == {
             "user_status": ("active", "inactive"),
-            "order_status": ("draft", "submitted", "shipped")
+            "order_status": ("draft", "submitted", "shipped"),
         }
 
     def test_get_defined_enums_with_schema_prefix(self):
@@ -104,14 +102,14 @@ class TestGetDefinedEnums:
         mock_connection = Mock()
         mock_connection.execute.return_value = [
             ("public.user_status", ["active", "inactive"]),
-            ('"public".order_status', ["draft", "submitted"])
+            ('"public".order_status', ["draft", "submitted"]),
         ]
 
         result = get_defined_enums(mock_connection, "public")
-        
+
         assert result == {
             "user_status": ("active", "inactive"),
-            "order_status": ("draft", "submitted")
+            "order_status": ("draft", "submitted"),
         }
 
     def test_get_defined_enums_with_filter(self):
@@ -120,19 +118,22 @@ class TestGetDefinedEnums:
         mock_connection.execute.return_value = [
             ("user_status", ["active", "inactive"]),
             ("user_priority", ["low", "high"]),
-            ("order_status", ["draft", "submitted"])
+            ("order_status", ["draft", "submitted"]),
         ]
 
         # Only include enums ending with '_status'
+        def status_filter(name):
+            return name.endswith("_status")
+
         result = get_defined_enums(
-            mock_connection, 
-            "public", 
-            include_name=lambda name: name.endswith('_status')
+            mock_connection,
+            "public",
+            include_name=status_filter,
         )
-        
+
         assert result == {
             "user_status": ("active", "inactive"),
-            "order_status": ("draft", "submitted")
+            "order_status": ("draft", "submitted"),
         }
         assert "user_priority" not in result
 
@@ -141,28 +142,24 @@ class TestGetDefinedEnums:
         mock_connection = Mock()
         mock_connection.execute.return_value = [
             ('"user_status"', ["active", "inactive"]),
-            ('"order-status"', ["draft", "submitted"])  # Hyphenated name
+            ('"order-status"', ["draft", "submitted"]),  # Hyphenated name
         ]
 
         result = get_defined_enums(mock_connection, "public")
-        
+
         assert result == {
             "user_status": ("active", "inactive"),
-            "order-status": ("draft", "submitted")
+            "order-status": ("draft", "submitted"),
         }
 
     def test_get_defined_enums_empty_enum(self):
         """Test get_defined_enums with enum that has no values."""
         mock_connection = Mock()
-        mock_connection.execute.return_value = [
-            ("empty_status", [])
-        ]
+        mock_connection.execute.return_value = [("empty_status", [])]
 
         result = get_defined_enums(mock_connection, "public")
-        
-        assert result == {
-            "empty_status": ()
-        }
+
+        assert result == {"empty_status": ()}
 
     def test_get_defined_enums_default_filter(self):
         """Test get_defined_enums with default include_name (no filter)."""
@@ -170,11 +167,11 @@ class TestGetDefinedEnums:
         mock_connection.execute.return_value = [
             ("user_status", ["active"]),
             ("_internal_enum", ["value"]),
-            ("123_numeric", ["test"])
+            ("123_numeric", ["test"]),
         ]
 
         result = get_defined_enums(mock_connection, "public")
-        
+
         # All enums should be included with default filter
         assert len(result) == 3
         assert "user_status" in result

@@ -1,11 +1,9 @@
 from typing import TYPE_CHECKING
 
-import alembic.operations.ops
-import alembic.operations.base
 import alembic.autogenerate.render
+import alembic.operations.base
+import alembic.operations.ops
 import sqlalchemy
-
-from .connection import get_connection
 
 if TYPE_CHECKING:
     from alembic.autogenerate.api import AutogenContext
@@ -14,7 +12,7 @@ if TYPE_CHECKING:
 @alembic.operations.base.Operations.register_operation("add_enum_value")
 class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
     """Operation to add a single value to an existing PostgreSQL enum type."""
-    
+
     def __init__(self, enum_schema: str, enum_name: str, value: str):
         self.enum_schema = enum_schema
         self.enum_name = enum_name
@@ -36,7 +34,7 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
             enum_type_name = f'"{self.enum_schema}"."{self.enum_name}"'
         else:
             enum_type_name = f'"{self.enum_name}"'
-            
+
         connection.execute(
             sqlalchemy.text(f"ALTER TYPE {enum_type_name} ADD VALUE '{self.value}'")
         )

@@ -1,12 +1,14 @@
 """
 Example Alembic env.py showing how to integrate simple-enum-generator.
 """
+
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 # Import your models
 from models import Base
+from sqlalchemy import engine_from_config, pool
 
 # IMPORTANT: Import alembic-pg-enum-generator to register hooks
 import alembic_pg_enum_generator
@@ -14,7 +16,7 @@ import alembic_pg_enum_generator
 # Optional: Configure enum filtering
 config = alembic_pg_enum_generator.Config(
     # Only process enums with specific naming patterns
-    include_name=lambda name: name.endswith('_status')
+    include_name=lambda name: name.endswith("_status")
 )
 alembic_pg_enum_generator.set_configuration(config)
 
@@ -52,10 +54,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

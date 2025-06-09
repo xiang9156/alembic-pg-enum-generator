@@ -71,6 +71,8 @@ path = "alembic_pg_enum_generator/__init__.py"
 [tool.ruff]
 target-version = "py38"
 line-length = 88
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle errors
     "W",   # pycodestyle warnings  
@@ -86,7 +88,7 @@ ignore = [
     "B905",  # `zip()` without an explicit `strict=` parameter
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
 
 [tool.mypy]
@@ -138,4 +140,10 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "raise AssertionError",
     "raise NotImplementedError",
+]
+
+[dependency-groups]
+dev = [
+    "alembic>=1.14.1",
+    "sqlalchemy>=2.0.41",
 ]
