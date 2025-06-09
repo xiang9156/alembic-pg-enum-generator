@@ -237,7 +237,7 @@ class TestIntegration:
         call_args = mock_connection.execute.call_args[0][0]
         sql_text = str(call_args)
 
-        assert 'ALTER TYPE "public"."user_status" ADD VALUE \'pending\'' in sql_text
+        assert "ALTER TYPE public.user_status ADD VALUE 'pending'" in sql_text
 
     def test_operation_rendering(self):
         """Test that operations render correctly in migration files."""
@@ -248,9 +248,7 @@ class TestIntegration:
 
         rendered = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = (
-            'op.execute("ALTER TYPE "public"."user_status" ADD VALUE \'pending\'")'
-        )
+        expected = "op.execute(\"ALTER TYPE public.user_status ADD VALUE 'pending'\")"
         assert rendered == expected
 
     @patch("alembic_pg_enum_generator.compare_dispatch.get_defined_enums")

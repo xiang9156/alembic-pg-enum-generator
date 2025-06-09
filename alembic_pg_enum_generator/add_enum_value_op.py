@@ -36,9 +36,9 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
     def execute(self, connection: Any) -> None:
         """Execute the ALTER TYPE ... ADD VALUE statement."""
         if self.enum_schema:
-            enum_type_name = f'"{self.enum_schema}"."{self.enum_name}"'
+            enum_type_name = f"{self.enum_schema}.{self.enum_name}"
         else:
-            enum_type_name = f'"{self.enum_name}"'
+            enum_type_name = self.enum_name
 
         connection.execute(
             sqlalchemy.text(f"ALTER TYPE {enum_type_name} ADD VALUE '{self.value}'")
@@ -51,9 +51,9 @@ def render_add_enum_value_op(
 ) -> str:
     """Render the add enum value operation in migration files."""
     if op.enum_schema:
-        enum_type_name = f'"{op.enum_schema}"."{op.enum_name}"'
+        enum_type_name = f"{op.enum_schema}.{op.enum_name}"
     else:
-        enum_type_name = f'"{op.enum_name}"'
+        enum_type_name = op.enum_name
 
     sql = f"ALTER TYPE {enum_type_name} ADD VALUE '{op.value}'"
     return f'op.execute("{sql}")'

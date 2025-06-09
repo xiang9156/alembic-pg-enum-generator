@@ -46,9 +46,7 @@ class TestAddEnumValueOp:
         call_args = mock_connection.execute.call_args[0][0]
 
         assert isinstance(call_args, sqlalchemy.sql.elements.TextClause)
-        assert 'ALTER TYPE "public"."user_status" ADD VALUE \'pending\'' in str(
-            call_args
-        )
+        assert "ALTER TYPE public.user_status ADD VALUE 'pending'" in str(call_args)
 
     def test_execute_without_schema(self):
         """Test execute method without schema."""
@@ -62,7 +60,7 @@ class TestAddEnumValueOp:
         call_args = mock_connection.execute.call_args[0][0]
 
         assert isinstance(call_args, sqlalchemy.sql.elements.TextClause)
-        assert "ALTER TYPE \"user_status\" ADD VALUE 'pending'" in str(call_args)
+        assert "ALTER TYPE user_status ADD VALUE 'pending'" in str(call_args)
 
     def test_execute_with_special_characters(self):
         """Test execute method with special characters in value."""
@@ -75,7 +73,7 @@ class TestAddEnumValueOp:
         mock_connection.execute.assert_called_once()
         call_args = mock_connection.execute.call_args[0][0]
 
-        assert 'ALTER TYPE "public"."user_status" ADD VALUE \'pending-review\'' in str(
+        assert "ALTER TYPE public.user_status ADD VALUE 'pending-review'" in str(
             call_args
         )
 
@@ -107,9 +105,7 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = (
-            'op.execute("ALTER TYPE "public"."user_status" ADD VALUE \'pending\'")'
-        )
+        expected = "op.execute(\"ALTER TYPE public.user_status ADD VALUE 'pending'\")"
         assert result == expected
 
     def test_render_function_no_schema(self):
@@ -121,7 +117,7 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = 'op.execute("ALTER TYPE "user_status" ADD VALUE \'pending\'")'
+        expected = "op.execute(\"ALTER TYPE user_status ADD VALUE 'pending'\")"
         assert result == expected
 
     def test_render_function_with_special_characters(self):
@@ -133,5 +129,5 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = 'op.execute("ALTER TYPE "my-schema"."user_status" ADD VALUE \'pending-review\'")'
+        expected = "op.execute(\"ALTER TYPE my-schema.user_status ADD VALUE 'pending-review'\")"
         assert result == expected
