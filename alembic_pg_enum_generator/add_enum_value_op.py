@@ -26,9 +26,13 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
         op = cls(enum_schema, enum_name, value)
         return operations.invoke(op)
 
-    def reverse(self) -> "AddEnumValueOp":
+    def reverse(self) -> "ExecuteSQLOp":
         """Reverse operation - not supported for add-only library."""
-        raise NotImplementedError("Enum value removal is not supported")
+        from alembic.operations.ops import ExecuteSQLOp
+        return ExecuteSQLOp(
+            f"-- Cannot automatically remove enum value '{self.value}' from {self.enum_schema}.{self.enum_name}",
+            execution_options={"autocommit": True}
+        )
 
     def execute(self, connection: Any) -> None:
         """Execute the ALTER TYPE ... ADD VALUE statement."""
