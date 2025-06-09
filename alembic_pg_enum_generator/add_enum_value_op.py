@@ -30,6 +30,7 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
         """Reverse operation - not supported for add-only library."""
         # Return a no-op operation that does nothing
         from alembic.operations.ops import ExecuteSQLOp
+
         return ExecuteSQLOp("-- No-op: enum value removal not supported")
 
     def execute(self, connection: Any) -> None:

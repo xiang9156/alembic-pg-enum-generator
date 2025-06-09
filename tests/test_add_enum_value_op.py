@@ -31,7 +31,7 @@ class TestAddEnumValueOp:
         reverse_op = op.reverse()
 
         # Should return an ExecuteSQLOp with a comment
-        assert hasattr(reverse_op, 'sqltext')
+        assert hasattr(reverse_op, "sqltext")
         assert "No-op: enum value removal not supported" in str(reverse_op.sqltext)
 
     def test_execute_with_schema(self):
