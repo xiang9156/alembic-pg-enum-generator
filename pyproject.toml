@@ -19,6 +19,10 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Database",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -29,7 +33,7 @@ dependencies = [
     "alembic>=1.0.0",
     "sqlalchemy>=1.4.0",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.8"
 
 [project.urls]
 Homepage = "https://github.com/xiang9156/simple-enum-generator"
@@ -64,7 +68,7 @@ packages = ["simple_enum_generator"]
 path = "simple_enum_generator/__init__.py"
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py38"
 line-length = 88
 select = [
     "E",   # pycodestyle errors
@@ -85,7 +89,7 @@ ignore = [
 "__init__.py" = ["F401"]
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.8"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

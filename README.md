@@ -146,7 +146,7 @@ def upgrade():
 
 ## Requirements
 
-- Python 3.12+
+- Python 3.8+
 - Alembic 1.0+
 - SQLAlchemy 1.4+
 - PostgreSQL (any version supporting ALTER TYPE ... ADD VALUE)

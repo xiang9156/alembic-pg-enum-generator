@@ -6,7 +6,7 @@ Thank you for your interest in contributing to Simple Enum Generator! This docum
 
 ### Prerequisites
 
-- Python 3.12 or higher
+- Python 3.8 or higher
 - [uv](https://docs.astral.sh/uv/) package manager
 - PostgreSQL (for integration tests)
 
