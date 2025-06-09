@@ -2,7 +2,6 @@
 
 from unittest.mock import Mock
 
-import pytest
 import sqlalchemy
 
 from alembic_pg_enum_generator.add_enum_value_op import AddEnumValueOp
@@ -28,9 +27,9 @@ class TestAddEnumValueOp:
     def test_reverse_returns_noop(self):
         """Test that reverse operation returns a no-op ExecuteSQLOp."""
         op = AddEnumValueOp("public", "user_status", "pending")
-        
+
         reverse_op = op.reverse()
-        
+
         # Should return an ExecuteSQLOp with a comment
         assert hasattr(reverse_op, 'sqltext')
         assert "No-op: enum value removal not supported" in str(reverse_op.sqltext)
