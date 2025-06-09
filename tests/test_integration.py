@@ -248,7 +248,7 @@ class TestIntegration:
 
         rendered = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = "op.add_enum_value('public', 'user_status', 'pending')"
+        expected = 'op.execute(\'ALTER TYPE "public"."user_status" ADD VALUE \'pending\'\')'
         assert rendered == expected
 
     @patch("alembic_pg_enum_generator.compare_dispatch.get_defined_enums")
