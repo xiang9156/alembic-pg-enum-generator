@@ -25,14 +25,15 @@ class TestAddEnumValueOp:
         assert op.enum_name == "user_status"
         assert op.value == "pending"
 
-    def test_reverse_not_implemented(self):
-        """Test that reverse operation raises NotImplementedError."""
+    def test_reverse_returns_noop(self):
+        """Test that reverse operation returns a no-op ExecuteSQLOp."""
         op = AddEnumValueOp("public", "user_status", "pending")
-
-        with pytest.raises(
-            NotImplementedError, match="Enum value removal is not supported"
-        ):
-            op.reverse()
+        
+        reverse_op = op.reverse()
+        
+        # Should return an ExecuteSQLOp with a comment
+        assert hasattr(reverse_op, 'sqltext')
+        assert "No-op: enum value removal not supported" in str(reverse_op.sqltext)
 
     def test_execute_with_schema(self):
         """Test execute method with schema."""
