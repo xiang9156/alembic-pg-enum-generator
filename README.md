@@ -75,7 +75,7 @@ from alembic import op
 
 def upgrade():
     # Simple, efficient ALTER TYPE statement
-    op.add_enum_value('public', 'user_status', 'pending')
+    op.execute('ALTER TYPE "public"."user_status" ADD VALUE \'pending\'')
 
 def downgrade():
     # Downgrade not supported for compatibility
@@ -140,8 +140,8 @@ class Priority(Enum):
 Generated migration:
 ```python
 def upgrade():
-    op.add_enum_value('public', 'priority', 'medium')
-    op.add_enum_value('public', 'priority', 'critical')
+    op.execute('ALTER TYPE "public"."priority" ADD VALUE \'medium\'')
+    op.execute('ALTER TYPE "public"."priority" ADD VALUE \'critical\'')
 ```
 
 ## Requirements
