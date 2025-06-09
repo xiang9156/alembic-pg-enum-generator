@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "alembic-pg-enum-generator"
-version = "0.1.0"
+version = "0.1.1"
 description = "Lightweight Alembic extension for PostgreSQL enum value additions using ALTER TYPE ... ADD VALUE"
 readme = "README.md"
 license = "MIT"

@@ -117,8 +117,8 @@ alembic_pg_enum_generator.set_configuration(config)
 | Operation | Alembic PG Enum Generator | Heavy Sync Libraries |
 |-----------|----------------------|---------------------|
 | SQL Command | `ALTER TYPE enum_name ADD VALUE 'new_value'` | Complex replace-and-cast with temp types |
-| Table Lock | ❌ None | ✅ ACCESS EXCLUSIVE (blocks all operations) |
-| Data Scan | ❌ None | ✅ Full table scan + rewrite |
+| Table Lock | ✅ None | ❌ ACCESS EXCLUSIVE (blocks all operations) |
+| Data Scan | ✅ None | ❌ Full table scan + rewrite |
 | Production Impact | 🟢 Minimal (milliseconds) | 🔴 High (minutes on large tables) |
 
 ## Example: Adding Multiple Values
