@@ -23,11 +23,11 @@ def upgrade() -> None:
     # These operations use efficient ALTER TYPE ... ADD VALUE statements
 
     # Add new value to user_status enum
-    op.add_enum_value("public", "user_status", "pending")
+    op.execute('ALTER TYPE "public"."user_status" ADD VALUE \'pending\'')
 
     # Add new values to order_status enum
-    op.add_enum_value("public", "order_status", "processing")
-    op.add_enum_value("public", "order_status", "delivered")
+    op.execute('ALTER TYPE "public"."order_status" ADD VALUE \'processing\'')
+    op.execute('ALTER TYPE "public"."order_status" ADD VALUE \'delivered\'')
 
 
 def downgrade() -> None:
