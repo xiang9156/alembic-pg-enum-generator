@@ -90,10 +90,10 @@ def downgrade():
 import alembic_pg_enum_generator
 
 # Only process enums matching certain patterns
-config = simple_enum_generator.Config(
+config = alembic_pg_enum_generator.Config(
     include_name=lambda name: name.startswith('app_')
 )
-simple_enum_generator.set_configuration(config)
+alembic_pg_enum_generator.set_configuration(config)
 ```
 
 ## Features

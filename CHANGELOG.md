@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ **Production safe** - Minimal database impact
 - ✅ **Auto-detection** - Integrates with Alembic's autogenerate
 - ✅ **Add-only** - Perfect for compatibility-focused environments
-- ✅ **Simple usage** - Just `import simple_enum_generator`
+- ✅ **Simple usage** - Just `import alembic_pg_enum_generator`
 
 ## [1.0.0] - 2024-01-01
 

@@ -53,7 +53,7 @@ uv run ruff format .
 uv run ruff check . --fix
 
 # Type checking
-uv run mypy simple_enum_generator
+uv run mypy alembic_pg_enum_generator
 
 # Run tests
 uv run pytest
@@ -68,7 +68,7 @@ We maintain high test coverage. Please ensure all new code is tested:
 uv run pytest
 
 # Run with coverage
-uv run pytest --cov=simple_enum_generator --cov-report=html
+uv run pytest --cov=alembic_pg_enum_generator --cov-report=html
 
 # Run specific test file
 uv run pytest tests/test_your_feature.py
@@ -121,7 +121,7 @@ git checkout -b feature/your-feature-name
 ```bash
 uv run ruff format .
 uv run ruff check .
-uv run mypy simple_enum_generator
+uv run mypy alembic_pg_enum_generator
 uv run pytest
 ```
 
@@ -149,8 +149,8 @@ Use conventional commits:
 ## Project Structure
 
 ```
-simple-enum-generator/
-├── simple_enum_generator/          # Main package
+alembic-pg-enum-generator/
+├── alembic_pg_enum_generator/          # Main package
 │   ├── __init__.py                # Package entry point
 │   ├── add_enum_value_op.py       # Custom Alembic operation
 │   ├── compare_dispatch.py        # Alembic comparator integration
@@ -205,7 +205,7 @@ To maintain the project's focus and simplicity:
 
 ## Release Process
 
-1. Update version in `simple_enum_generator/__init__.py`
+1. Update version in `alembic_pg_enum_generator/__init__.py`
 2. Update `CHANGELOG.md`
 3. Create release PR
 4. After merge, tag the release: `git tag v1.x.x`

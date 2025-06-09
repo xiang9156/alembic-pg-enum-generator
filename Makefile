@@ -111,7 +111,7 @@ tag-release:
 	@read -p "Enter new version (e.g., 1.0.1): " version; \
 	sed -i '' "s/version = \".*\"/version = \"$$version\"/" pyproject.toml; \
 	sed -i '' "s/__version__ = \".*\"/__version__ = \"$$version\"/" alembic_pg_enum_generator/__init__.py; \
-	git add pyproject.toml simple_enum_generator/__init__.py; \
+	git add pyproject.toml alembic_pg_enum_generator/__init__.py; \
 	git commit -m "chore: bump version to $$version"; \
 	git tag "v$$version"; \
 	echo "✅ Tagged version $$version. Push with: git push origin main --tags"

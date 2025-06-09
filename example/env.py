@@ -1,5 +1,5 @@
 """
-Example Alembic env.py showing how to integrate simple-enum-generator.
+Example Alembic env.py showing how to integrate alembic-pg-enum-generator.
 """
 
 from logging.config import fileConfig

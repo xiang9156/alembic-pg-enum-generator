@@ -52,7 +52,7 @@ jobs:
         run: uv run ruff format --check .
 
       - name: Run mypy
-        run: uv run mypy simple_enum_generator
+        run: uv run mypy alembic_pg_enum_generator
 
       - name: Run tests
         run: uv run pytest

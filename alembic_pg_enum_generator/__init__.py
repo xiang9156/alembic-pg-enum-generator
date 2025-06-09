@@ -7,7 +7,7 @@ using PostgreSQL's efficient ALTER TYPE ... ADD VALUE statement.
 Usage:
     Simply import this library in your Alembic env.py:
 
-    import simple_enum_generator
+    import alembic_pg_enum_generator
 
     The import automatically registers the necessary hooks with Alembic's
     autogenerate system.
