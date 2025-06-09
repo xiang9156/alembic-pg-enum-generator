@@ -107,7 +107,7 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = "op.add_enum_value('public', 'user_status', 'pending')"
+        expected = 'op.execute(\'ALTER TYPE "public"."user_status" ADD VALUE \'pending\'\')'
         assert result == expected
 
     def test_render_function_no_schema(self):
@@ -119,7 +119,7 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = "op.add_enum_value(None, 'user_status', 'pending')"
+        expected = 'op.execute(\'ALTER TYPE "user_status" ADD VALUE \'pending\'\')'
         assert result == expected
 
     def test_render_function_with_special_characters(self):
@@ -131,5 +131,5 @@ class TestAddEnumValueOp:
 
         result = render_add_enum_value_op(mock_autogen_context, op)
 
-        expected = "op.add_enum_value('my-schema', 'user_status', 'pending-review')"
+        expected = 'op.execute(\'ALTER TYPE "my-schema"."user_status" ADD VALUE \'pending-review\'\')'
         assert result == expected

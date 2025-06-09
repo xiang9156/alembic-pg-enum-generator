@@ -50,4 +50,10 @@ def render_add_enum_value_op(
     autogen_context: "AutogenContext", op: AddEnumValueOp
 ) -> str:
     """Render the add enum value operation in migration files."""
-    return f"op.add_enum_value({op.enum_schema!r}, {op.enum_name!r}, {op.value!r})"
+    if op.enum_schema:
+        enum_type_name = f'"{op.enum_schema}"."{op.enum_name}"'
+    else:
+        enum_type_name = f'"{op.enum_name}"'
+    
+    sql = f"ALTER TYPE {enum_type_name} ADD VALUE '{op.value}'"
+    return f"op.execute('{sql}')"
