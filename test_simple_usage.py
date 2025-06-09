@@ -3,7 +3,7 @@ Simple test to verify the enum detection logic works correctly.
 """
 from enum import Enum as PyEnum
 from sqlalchemy import Column, Integer, String, Enum, MetaData, Table
-from simple_enum_generator.declared_enums import get_declared_enums, get_enum_values
+from alembic_pg_enum_generator.declared_enums import get_declared_enums, get_enum_values
 
 
 class TestStatus(PyEnum):

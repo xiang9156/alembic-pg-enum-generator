@@ -4,7 +4,7 @@ from enum import Enum as PyEnum
 from sqlalchemy import Column, Integer, String, Enum, MetaData, Table, ARRAY
 from sqlalchemy.types import TypeDecorator
 
-from simple_enum_generator.declared_enums import (
+from alembic_pg_enum_generator.declared_enums import (
     get_declared_enums,
     get_enum_values,
     column_type_is_enum,

@@ -8,15 +8,15 @@ from alembic import context
 # Import your models
 from models import Base
 
-# IMPORTANT: Import simple-enum-generator to register hooks
-import simple_enum_generator
+# IMPORTANT: Import alembic-pg-enum-generator to register hooks
+import alembic_pg_enum_generator
 
 # Optional: Configure enum filtering
-config = simple_enum_generator.Config(
+config = alembic_pg_enum_generator.Config(
     # Only process enums with specific naming patterns
     include_name=lambda name: name.endswith('_status')
 )
-simple_enum_generator.set_configuration(config)
+alembic_pg_enum_generator.set_configuration(config)
 
 # This is the Alembic Config object
 config = context.config

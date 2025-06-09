@@ -2,7 +2,7 @@
 import pytest
 from unittest.mock import Mock, MagicMock
 
-from simple_enum_generator.defined_enums import (
+from alembic_pg_enum_generator.defined_enums import (
     get_defined_enums,
     get_all_enums,
     _extract_enum_name,

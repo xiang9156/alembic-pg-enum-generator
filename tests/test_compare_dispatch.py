@@ -2,8 +2,8 @@
 import pytest
 from unittest.mock import Mock, patch, MagicMock
 
-from simple_enum_generator.compare_dispatch import compare_enums_for_additions
-from simple_enum_generator.add_enum_value_op import AddEnumValueOp
+from alembic_pg_enum_generator.compare_dispatch import compare_enums_for_additions
+from alembic_pg_enum_generator.add_enum_value_op import AddEnumValueOp
 
 
 class MockUpgradeOps:
@@ -22,9 +22,9 @@ class MockAutogenContext:
 
 
 class TestCompareEnumsForAdditions:
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_no_new_values(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test when there are no new enum values to add."""
         # Setup mocks
@@ -44,9 +44,9 @@ class TestCompareEnumsForAdditions:
         # No operations should be added
         assert len(upgrade_ops.ops) == 0
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_single_new_value(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test when there is a single new enum value to add."""
         # Setup mocks
@@ -71,9 +71,9 @@ class TestCompareEnumsForAdditions:
         assert op.enum_name == "user_status"
         assert op.value == "pending"
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_multiple_new_values(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test when there are multiple new enum values to add."""
         # Setup mocks
@@ -104,9 +104,9 @@ class TestCompareEnumsForAdditions:
             assert op.enum_schema == "public"
             assert op.enum_name == "user_status"
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_multiple_enums(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test when multiple enums have new values."""
         # Setup mocks
@@ -137,9 +137,9 @@ class TestCompareEnumsForAdditions:
         assert "order_status" in ops_by_enum
         assert ops_by_enum["order_status"].value == "shipped"
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_enum_not_in_database(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test when enum exists in code but not in database (should be skipped)."""
         # Setup mocks
@@ -174,9 +174,9 @@ class TestCompareEnumsForAdditions:
         # No operations should be added for non-PostgreSQL
         assert len(upgrade_ops.ops) == 0
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_none_schema_handling(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test handling of None schema (should use default)."""
         # Setup mocks
@@ -200,9 +200,9 @@ class TestCompareEnumsForAdditions:
         assert op.enum_name == "user_status"
         assert op.value == "pending"
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_removed_values_ignored(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test that removed enum values are ignored (add-only behavior)."""
         # Setup mocks
@@ -224,9 +224,9 @@ class TestCompareEnumsForAdditions:
         op = upgrade_ops.ops[0]
         assert op.value == "pending"
 
-    @patch('simple_enum_generator.compare_dispatch.get_configuration')
-    @patch('simple_enum_generator.compare_dispatch.get_declared_enums')
-    @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_configuration')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_declared_enums')
+    @patch('alembic_pg_enum_generator.compare_dispatch.get_defined_enums')
     def test_configuration_include_name_filter(self, mock_get_defined, mock_get_declared, mock_get_config):
         """Test that configuration include_name filter is passed through."""
         # Setup mocks

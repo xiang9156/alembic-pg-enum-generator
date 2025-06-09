@@ -1,6 +1,6 @@
 """Tests for config module."""
 import pytest
-from simple_enum_generator.config import Config, get_configuration, set_configuration
+from alembic_pg_enum_generator.config import Config, get_configuration, set_configuration
 
 
 class TestConfig:
@@ -29,8 +29,8 @@ class TestConfig:
 class TestConfigurationManagement:
     def teardown_method(self):
         """Reset global configuration after each test."""
-        import simple_enum_generator.config
-        simple_enum_generator.config._configuration = None
+        import alembic_pg_enum_generator.config
+        alembic_pg_enum_generator.config._configuration = None
 
     def test_get_configuration_default(self):
         """Test get_configuration returns default Config when none set."""

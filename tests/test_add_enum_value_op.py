@@ -3,7 +3,7 @@ import pytest
 from unittest.mock import Mock, MagicMock, patch
 import sqlalchemy
 
-from simple_enum_generator.add_enum_value_op import AddEnumValueOp
+from alembic_pg_enum_generator.add_enum_value_op import AddEnumValueOp
 
 
 class TestAddEnumValueOp:
@@ -90,19 +90,19 @@ class TestAddEnumValueOp:
         assert op.value == "pending"
         assert result == "result"
 
-    @patch('simple_enum_generator.add_enum_value_op.alembic.autogenerate.render.renderers.dispatch_for')
+    @patch('alembic_pg_enum_generator.add_enum_value_op.alembic.autogenerate.render.renderers.dispatch_for')
     def test_renderer_registration(self, mock_dispatch):
         """Test that the renderer is properly registered."""
         # The renderer should be registered via decorator
         # This test ensures the module structure is correct
-        from simple_enum_generator.add_enum_value_op import render_add_enum_value_op
+        from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
         
         # The function should exist
         assert callable(render_add_enum_value_op)
 
     def test_render_function(self):
         """Test the render function directly."""
-        from simple_enum_generator.add_enum_value_op import render_add_enum_value_op
+        from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
         
         mock_autogen_context = Mock()
         op = AddEnumValueOp("public", "user_status", "pending")
@@ -114,7 +114,7 @@ class TestAddEnumValueOp:
 
     def test_render_function_no_schema(self):
         """Test the render function without schema."""
-        from simple_enum_generator.add_enum_value_op import render_add_enum_value_op
+        from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
         
         mock_autogen_context = Mock()
         op = AddEnumValueOp(None, "user_status", "pending")
@@ -126,7 +126,7 @@ class TestAddEnumValueOp:
 
     def test_render_function_with_special_characters(self):
         """Test the render function with special characters."""
-        from simple_enum_generator.add_enum_value_op import render_add_enum_value_op
+        from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
         
         mock_autogen_context = Mock()
         op = AddEnumValueOp("my-schema", "user_status", "pending-review")
@@ -136,12 +136,12 @@ class TestAddEnumValueOp:
         expected = "op.add_enum_value('my-schema', 'user_status', 'pending-review')"
         assert result == expected
 
-    @patch('simple_enum_generator.add_enum_value_op.alembic.operations.base.Operations.register_operation')
+    @patch('alembic_pg_enum_generator.add_enum_value_op.alembic.operations.base.Operations.register_operation')
     def test_operation_registration(self, mock_register):
         """Test that the operation is properly registered."""
         # The operation should be registered via decorator
         # This test ensures the decorator is applied
-        from simple_enum_generator.add_enum_value_op import AddEnumValueOp
+        from alembic_pg_enum_generator.add_enum_value_op import AddEnumValueOp
         
         # The class should exist and be properly decorated
         assert hasattr(AddEnumValueOp, '__module__')

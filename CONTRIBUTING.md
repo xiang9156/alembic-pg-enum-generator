@@ -1,6 +1,6 @@
-# Contributing to Simple Enum Generator
+# Contributing to Alembic PostgreSQL Enum Generator
 
-Thank you for your interest in contributing to Simple Enum Generator! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to Alembic PostgreSQL Enum Generator! This document provides guidelines and information for contributors.
 
 ## Getting Started
 
@@ -14,8 +14,8 @@ Thank you for your interest in contributing to Simple Enum Generator! This docum
 
 1. **Fork and clone the repository:**
 ```bash
-git clone https://github.com/xiang9156/simple-enum-generator.git
-cd simple-enum-generator
+git clone https://github.com/xiang9156/alembic-pg-enum-generator.git
+cd alembic-pg-enum-generator
 ```
 
 2. **Install dependencies:**
@@ -226,4 +226,4 @@ To maintain the project's focus and simplicity:
 - Help others learn and grow
 - Maintain a welcoming environment
 
-Thank you for contributing to Simple Enum Generator!
+Thank you for contributing to Alembic PostgreSQL Enum Generator!

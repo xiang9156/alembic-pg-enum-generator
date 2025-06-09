@@ -1,10 +1,10 @@
-# Simple Enum Generator
+# Alembic PostgreSQL Enum Generator
 
-[![CI](https://github.com/xiang9156/simple-enum-generator/workflows/CI/badge.svg)](https://github.com/xiang9156/simple-enum-generator/actions)
-[![PyPI version](https://badge.fury.io/py/simple-enum-generator.svg)](https://badge.fury.io/py/simple-enum-generator)
-[![Python versions](https://img.shields.io/pypi/pyversions/simple-enum-generator.svg)](https://pypi.org/project/simple-enum-generator/)
+[![CI](https://github.com/xiang9156/alembic-pg-enum-generator/workflows/CI/badge.svg)](https://github.com/xiang9156/alembic-pg-enum-generator/actions)
+[![PyPI version](https://badge.fury.io/py/alembic-pg-enum-generator.svg)](https://badge.fury.io/py/alembic-pg-enum-generator)
+[![Python versions](https://img.shields.io/pypi/pyversions/alembic-pg-enum-generator.svg)](https://pypi.org/project/alembic-pg-enum-generator/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code coverage](https://codecov.io/gh/xiang9156/simple-enum-generator/branch/main/graph/badge.svg)](https://codecov.io/gh/xiang9156/simple-enum-generator)
+[![Code coverage](https://codecov.io/gh/xiang9156/alembic-pg-enum-generator/branch/main/graph/badge.svg)](https://codecov.io/gh/xiang9156/alembic-pg-enum-generator)
 
 A lightweight Alembic extension for PostgreSQL enum value additions.
 
@@ -20,7 +20,7 @@ Unlike complex enum sync libraries that use heavy "replace-and-cast" approaches 
 ## Installation
 
 ```bash
-pip install simple-enum-generator
+pip install alembic-pg-enum-generator
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ pip install simple-enum-generator
 
 ```python
 # In your alembic/env.py file
-import simple_enum_generator
+import alembic_pg_enum_generator
 
 # The import automatically registers with Alembic's autogenerate system
 ```
@@ -87,7 +87,7 @@ def downgrade():
 ### Filter enum names
 
 ```python
-import simple_enum_generator
+import alembic_pg_enum_generator
 
 # Only process enums matching certain patterns
 config = simple_enum_generator.Config(
@@ -159,8 +159,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/xiang9156/simple-enum-generator.git
-cd simple-enum-generator
+git clone https://github.com/xiang9156/alembic-pg-enum-generator.git
+cd alembic-pg-enum-generator
 ```
 
 2. Install dependencies with uv:
@@ -182,8 +182,8 @@ uv run pytest
 
 - **Linting**: `uv run ruff check .`
 - **Formatting**: `uv run ruff format .`
-- **Type checking**: `uv run mypy simple_enum_generator`
-- **Tests**: `uv run pytest --cov=simple_enum_generator`
+- **Type checking**: `uv run mypy alembic_pg_enum_generator`
+- **Tests**: `uv run pytest --cov=alembic_pg_enum_generator`
 
 ## Changelog
 

@@ -4,9 +4,9 @@ from enum import Enum as PyEnum
 from unittest.mock import Mock, patch
 from sqlalchemy import Column, Integer, String, Enum, MetaData, Table
 
-from simple_enum_generator.compare_dispatch import compare_enums_for_additions
-from simple_enum_generator.add_enum_value_op import AddEnumValueOp
-from simple_enum_generator.config import Config, set_configuration
+from alembic_pg_enum_generator.compare_dispatch import compare_enums_for_additions
+from alembic_pg_enum_generator.add_enum_value_op import AddEnumValueOp
+from alembic_pg_enum_generator.config import Config, set_configuration
 
 
 class UserStatus(PyEnum):
@@ -44,8 +44,8 @@ class MockAutogenContext:
 class TestIntegration:
     def teardown_method(self):
         """Reset global configuration after each test."""
-        import simple_enum_generator.config
-        simple_enum_generator.config._configuration = None
+        import alembic_pg_enum_generator.config
+        alembic_pg_enum_generator.config._configuration = None
 
     @patch('simple_enum_generator.compare_dispatch.get_defined_enums')
     def test_end_to_end_single_new_value(self, mock_get_defined):
@@ -235,7 +235,7 @@ class TestIntegration:
 
     def test_operation_rendering(self):
         """Test that operations render correctly in migration files."""
-        from simple_enum_generator.add_enum_value_op import render_add_enum_value_op
+        from alembic_pg_enum_generator.add_enum_value_op import render_add_enum_value_op
         
         mock_autogen_context = Mock()
         op = AddEnumValueOp('public', 'user_status', 'pending')

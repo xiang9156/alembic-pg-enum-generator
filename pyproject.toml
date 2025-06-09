@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "simple-enum-generator"
+name = "alembic-pg-enum-generator"
 version = "1.0.0"
 description = "Lightweight Alembic extension for PostgreSQL enum value additions using ALTER TYPE ... ADD VALUE"
 readme = "README.md"
@@ -37,11 +37,11 @@ dependencies = [
 requires-python = ">=3.8"
 
 [project.urls]
-Homepage = "https://github.com/xiang9156/simple-enum-generator"
-Repository = "https://github.com/xiang9156/simple-enum-generator"
-Documentation = "https://github.com/xiang9156/simple-enum-generator#readme"
-Issues = "https://github.com/xiang9156/simple-enum-generator/issues"
-Changelog = "https://github.com/xiang9156/simple-enum-generator/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/xiang9156/alembic-pg-enum-generator"
+Repository = "https://github.com/xiang9156/alembic-pg-enum-generator"
+Documentation = "https://github.com/xiang9156/alembic-pg-enum-generator#readme"
+Issues = "https://github.com/xiang9156/alembic-pg-enum-generator/issues"
+Changelog = "https://github.com/xiang9156/alembic-pg-enum-generator/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -63,10 +63,10 @@ test = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["simple_enum_generator"]
+packages = ["alembic_pg_enum_generator"]
 
 [tool.hatch.version]
-path = "simple_enum_generator/__init__.py"
+path = "alembic_pg_enum_generator/__init__.py"
 
 [tool.ruff]
 target-version = "py38"
@@ -118,14 +118,14 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = [
     "-v",
-    "--cov=simple_enum_generator",
+    "--cov=alembic_pg_enum_generator",
     "--cov-report=term-missing",
     "--cov-report=xml",
     "--cov-report=html",
 ]
 
 [tool.coverage.run]
-source = ["simple_enum_generator"]
+source = ["alembic_pg_enum_generator"]
 omit = [
     "*/tests/*",
     "*/test_*.py",

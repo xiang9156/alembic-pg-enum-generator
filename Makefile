@@ -2,7 +2,7 @@
 
 # Default target
 help:
-	@echo "Simple Enum Generator - Development Commands"
+	@echo "Alembic PostgreSQL Enum Generator - Development Commands"
 	@echo ""
 	@echo "Setup:"
 	@echo "  install     Install dependencies with uv"
@@ -42,13 +42,13 @@ format:
 	uv run ruff format .
 
 type-check:
-	uv run mypy simple_enum_generator
+	uv run mypy alembic_pg_enum_generator
 
 test:
 	uv run pytest
 
 test-cov:
-	uv run pytest --cov=simple_enum_generator --cov-report=html --cov-report=term-missing
+	uv run pytest --cov=alembic_pg_enum_generator --cov-report=html --cov-report=term-missing
 
 test-verbose:
 	uv run pytest -v
@@ -103,14 +103,14 @@ test-docker:
 # Documentation
 docs-serve:
 	@echo "📖 README.md contains all documentation"
-	@echo "🌐 View online: https://github.com/yourusername/simple-enum-generator"
+	@echo "🌐 View online: https://github.com/xiang9156/alembic-pg-enum-generator"
 
 # Release helpers
 tag-release:
 	@echo "Current version: $$(grep version pyproject.toml | head -1 | cut -d'"' -f2)"
 	@read -p "Enter new version (e.g., 1.0.1): " version; \
 	sed -i '' "s/version = \".*\"/version = \"$$version\"/" pyproject.toml; \
-	sed -i '' "s/__version__ = \".*\"/__version__ = \"$$version\"/" simple_enum_generator/__init__.py; \
+	sed -i '' "s/__version__ = \".*\"/__version__ = \"$$version\"/" alembic_pg_enum_generator/__init__.py; \
 	git add pyproject.toml simple_enum_generator/__init__.py; \
 	git commit -m "chore: bump version to $$version"; \
 	git tag "v$$version"; \

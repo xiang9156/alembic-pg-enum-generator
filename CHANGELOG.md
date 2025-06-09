@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial implementation of simple enum generator
+- Initial implementation of Alembic PostgreSQL enum generator
 - Support for PostgreSQL enum value additions using `ALTER TYPE ... ADD VALUE`
 - Automatic detection of new enum values in SQLAlchemy models
 - Integration with Alembic's autogenerate system
@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-01-01
 
 ### Added
-- Initial release of Simple Enum Generator
+- Initial release of Alembic PostgreSQL Enum Generator
 - Core functionality for detecting and adding new enum values
 - Alembic plugin architecture implementation
 - Documentation and examples
@@ -61,9 +61,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 pip uninstall alembic-postgresql-enum  # or similar
 ```
 
-2. **Install simple-enum-generator**:
+2. **Install alembic-pg-enum-generator**:
 ```bash
-pip install simple-enum-generator
+pip install alembic-pg-enum-generator
 ```
 
 3. **Update your alembic/env.py**:
@@ -72,7 +72,7 @@ pip install simple-enum-generator
 # import alembic_postgresql_enum
 
 # Add new import
-import simple_enum_generator
+import alembic_pg_enum_generator
 ```
 
 4. **Generate new migration**:
@@ -96,12 +96,12 @@ alembic_postgresql_enum.set_configuration({
 New simple configuration:
 ```python
 # New way - simple config
-import simple_enum_generator
+import alembic_pg_enum_generator
 
-config = simple_enum_generator.Config(
+config = alembic_pg_enum_generator.Config(
     include_name=lambda name: name.endswith('_status')  # Optional filter
 )
-simple_enum_generator.set_configuration(config)
+alembic_pg_enum_generator.set_configuration(config)
 ```
 
 ## Breaking Changes
