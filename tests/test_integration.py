@@ -249,7 +249,7 @@ class TestIntegration:
         rendered = render_add_enum_value_op(mock_autogen_context, op)
 
         expected = (
-            "op.execute('ALTER TYPE \"public\".\"user_status\" ADD VALUE 'pending'')"
+            'op.execute("ALTER TYPE "public"."user_status" ADD VALUE \'pending\'")'
         )
         assert rendered == expected
 

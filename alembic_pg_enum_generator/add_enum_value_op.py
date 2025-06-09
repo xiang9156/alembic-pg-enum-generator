@@ -56,4 +56,4 @@ def render_add_enum_value_op(
         enum_type_name = f'"{op.enum_name}"'
 
     sql = f"ALTER TYPE {enum_type_name} ADD VALUE '{op.value}'"
-    return f"op.execute('{sql}')"
+    return f'op.execute("{sql}")'
