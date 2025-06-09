@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import alembic.autogenerate.render
 import alembic.operations.base
@@ -19,16 +19,18 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
         self.value = value
 
     @classmethod
-    def add_enum_value(cls, operations, enum_schema: str, enum_name: str, value: str):
+    def add_enum_value(
+        cls, operations: Any, enum_schema: str, enum_name: str, value: str
+    ) -> Any:
         """Execute the add enum value operation."""
         op = cls(enum_schema, enum_name, value)
         return operations.invoke(op)
 
-    def reverse(self):
+    def reverse(self) -> "AddEnumValueOp":
         """Reverse operation - not supported for add-only library."""
         raise NotImplementedError("Enum value removal is not supported")
 
-    def execute(self, connection):
+    def execute(self, connection: Any) -> None:
         """Execute the ALTER TYPE ... ADD VALUE statement."""
         if self.enum_schema:
             enum_type_name = f'"{self.enum_schema}"."{self.enum_name}"'
@@ -41,6 +43,8 @@ class AddEnumValueOp(alembic.operations.ops.MigrateOperation):
 
 
 @alembic.autogenerate.render.renderers.dispatch_for(AddEnumValueOp)
-def render_add_enum_value_op(autogen_context: "AutogenContext", op: AddEnumValueOp):
+def render_add_enum_value_op(
+    autogen_context: "AutogenContext", op: AddEnumValueOp
+) -> str:
     """Render the add enum value operation in migration files."""
     return f"op.add_enum_value({op.enum_schema!r}, {op.enum_name!r}, {op.value!r})"

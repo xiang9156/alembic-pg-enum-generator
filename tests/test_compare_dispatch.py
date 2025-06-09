@@ -251,7 +251,7 @@ class TestCompareEnumsForAdditions:
 
         # Verify the filter was passed to both functions
         mock_get_declared.assert_called_once_with(
-            metadata=autogen_context.metadata,
+            metadata=[autogen_context.metadata],
             schema="public",
             default_schema="public",
             include_name=include_name_filter,

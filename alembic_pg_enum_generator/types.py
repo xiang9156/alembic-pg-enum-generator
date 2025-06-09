@@ -9,7 +9,7 @@ class ColumnType(PyEnum):
     COMMON = Enum
     ARRAY = ARRAY
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}.{self.name}"
 
 
@@ -23,7 +23,7 @@ class TableReference:
     table_schema: Optional[str] = Unspecified  # type: ignore[assignment]
     column_type: ColumnType = ColumnType.COMMON
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         result_str = "TableReference("
         if self.table_schema:
             result_str += f"table_schema={self.table_schema!r}, "
@@ -36,7 +36,7 @@ class TableReference:
         return result_str
 
     @property
-    def table_name_with_schema(self):
+    def table_name_with_schema(self) -> str:
         if self.table_schema:
             prefix = f'"{self.table_schema}".'
         else:
@@ -44,7 +44,7 @@ class TableReference:
         return f'{prefix}"{self.table_name}"'
 
     @property
-    def escaped_column_name(self):
+    def escaped_column_name(self) -> str:
         return f'"{self.column_name}"'
 
 

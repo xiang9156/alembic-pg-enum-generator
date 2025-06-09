@@ -6,7 +6,7 @@ from sqlalchemy import MetaData
 from .types import EnumNamesToValues
 
 
-def get_enum_values(enum_type: sqlalchemy.Enum) -> Tuple[str, ...]:
+def get_enum_values(enum_type: Union[sqlalchemy.Enum, Any]) -> Tuple[str, ...]:
     """Extract enum values from SQLAlchemy Enum type."""
     # Handle TypeDecorator wrapped enums
     if isinstance(enum_type, sqlalchemy.types.TypeDecorator):
@@ -16,16 +16,20 @@ def get_enum_values(enum_type: sqlalchemy.Enum) -> Tuple[str, ...]:
     if hasattr(enum_type, "python_type") and enum_type.python_type:
         python_enum_class = enum_type.python_type
         if hasattr(python_enum_class, "__members__"):
-            return tuple(member.value for member in python_enum_class)
+            return tuple(
+                member.value for member in python_enum_class.__members__.values()
+            )
 
     # Otherwise, use the enums list directly (for string-based enums)
-    return tuple(enum_type.enums)
+    if hasattr(enum_type, "enums"):
+        return tuple(enum_type.enums)
+    return ()
 
 
 def column_type_is_enum(column_type: Any) -> bool:
     """Check if a column type is a PostgreSQL enum."""
     if isinstance(column_type, sqlalchemy.Enum):
-        return column_type.native_enum
+        return bool(column_type.native_enum)
 
     # For specific case when types.TypeDecorator is used
     if isinstance(getattr(column_type, "impl", None), sqlalchemy.Enum):
@@ -54,7 +58,7 @@ def get_declared_enums(
     """
     if include_name is None:
 
-        def include_name(_):
+        def include_name(_: str) -> bool:
             return True
 
     enum_name_to_values = {}
@@ -76,14 +80,21 @@ def get_declared_enums(
                 if not column_type_is_enum(column_type):
                     continue
 
-                if not include_name(column_type.name):
+                # Type guard: at this point we know it's an enum-like type
+                if not hasattr(column_type, "name"):
                     continue
 
-                column_type_schema = column_type.schema or default_schema
+                if not include_name(column_type.name):  # type: ignore[attr-defined]
+                    continue
+
+                column_type_schema = (
+                    getattr(column_type, "schema", None) or default_schema
+                )
                 if column_type_schema != schema:
                     continue
 
-                if column_type.name not in enum_name_to_values:
-                    enum_name_to_values[column_type.name] = get_enum_values(column_type)
+                enum_name = column_type.name  # type: ignore[attr-defined]
+                if enum_name not in enum_name_to_values:
+                    enum_name_to_values[enum_name] = get_enum_values(column_type)
 
     return enum_name_to_values

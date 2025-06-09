@@ -4,7 +4,7 @@ from typing import Callable, Optional
 
 @dataclass
 class Config:
-    include_name: Optional[Callable[[str, str], bool]] = None
+    include_name: Optional[Callable[[str], bool]] = None
 
 
 _configuration: Optional[Config] = None

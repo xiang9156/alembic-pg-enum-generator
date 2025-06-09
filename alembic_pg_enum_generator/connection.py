@@ -1,11 +1,11 @@
 from contextlib import contextmanager
-from typing import Iterator
+from typing import Any, Iterator
 
 import sqlalchemy
 
 
 @contextmanager
-def get_connection(operations) -> Iterator[sqlalchemy.engine.Connection]:
+def get_connection(operations: Any) -> Iterator[sqlalchemy.engine.Connection]:
     """
     SQLAlchemy 2.0 changes the operation binding location; bridge function to support
     both 1.x and 2.x.

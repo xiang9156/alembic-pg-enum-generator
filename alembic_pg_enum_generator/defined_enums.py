@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
 
 import sqlalchemy
 
@@ -25,7 +25,7 @@ def _extract_enum_name(enum_name: str, schema: str) -> str:
     return enum_name
 
 
-def get_all_enums(connection: "Connection", schema: str):
+def get_all_enums(connection: "Connection", schema: str) -> Any:
     """Query PostgreSQL for all enum types and their values in a schema."""
     sql = """
         SELECT
@@ -61,7 +61,7 @@ def get_defined_enums(
     """
     if include_name is None:
 
-        def include_name(_):
+        def include_name(_: str) -> bool:
             return True
 
     return {

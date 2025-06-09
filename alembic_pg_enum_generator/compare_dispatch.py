@@ -1,8 +1,9 @@
-from typing import Iterable, Union
+from typing import Iterable, List, Union, cast
 
 from alembic.autogenerate import comparators
 from alembic.autogenerate.api import AutogenContext
 from alembic.operations.ops import UpgradeOps
+from sqlalchemy import MetaData
 
 from .add_enum_value_op import AddEnumValueOp
 from .config import get_configuration
@@ -15,7 +16,7 @@ def compare_enums_for_additions(
     autogen_context: AutogenContext,
     upgrade_ops: UpgradeOps,
     schema_names: Iterable[Union[str, None]],
-):
+) -> None:
     """
     Compare declared and defined enums to detect new values that need to be added.
     This is the main integration point with Alembic's autogenerate system.
@@ -23,19 +24,30 @@ def compare_enums_for_additions(
     config = get_configuration()
 
     # Check if we're using PostgreSQL
-    if not autogen_context.connection.dialect.name == "postgresql":
+    connection = autogen_context.connection
+    if connection is None or connection.dialect.name != "postgresql":
         return
 
     # Get default schema
-    default_schema = autogen_context.connection.dialect.default_schema_name or "public"
+    default_schema = connection.dialect.default_schema_name or "public"
 
     for schema in schema_names:
         if schema is None:
             schema = default_schema
 
         # Get declared enums from SQLAlchemy metadata
+        metadata = autogen_context.metadata
+        if metadata is None:
+            continue
+
+        # Convert metadata to the expected type
+        if isinstance(metadata, list):
+            metadata_list = cast(List[MetaData], metadata)
+        else:
+            metadata_list = [cast(MetaData, metadata)]
+
         declared_enums = get_declared_enums(
-            metadata=autogen_context.metadata,
+            metadata=metadata_list,
             schema=schema,
             default_schema=default_schema,
             include_name=config.include_name,
@@ -43,7 +55,7 @@ def compare_enums_for_additions(
 
         # Get defined enums from PostgreSQL database
         defined_enums = get_defined_enums(
-            connection=autogen_context.connection,
+            connection=connection,
             schema=schema,
             include_name=config.include_name,
         )
