@@ -1,5 +1,5 @@
 """
-Simple Enum Generator - A lightweight Alembic extension for PostgreSQL enum additions.
+Alembic PostgreSQL Enum Generator - A lightweight Alembic extension for PostgreSQL enum additions.
 
 This library provides automatic detection and generation of enum value additions
 using PostgreSQL's efficient ALTER TYPE ... ADD VALUE statement.

@@ -114,7 +114,7 @@ alembic_pg_enum_generator.set_configuration(config)
 
 ## Performance Comparison
 
-| Operation | Simple Enum Generator | Heavy Sync Libraries |
+| Operation | Alembic PG Enum Generator | Heavy Sync Libraries |
 |-----------|----------------------|---------------------|
 | SQL Command | `ALTER TYPE enum_name ADD VALUE 'new_value'` | Complex replace-and-cast with temp types |
 | Table Lock | ❌ None | ✅ ACCESS EXCLUSIVE (blocks all operations) |
